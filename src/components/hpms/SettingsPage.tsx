@@ -25,10 +25,12 @@ export function SettingsPage() {
           <Card>
             <CardHeader><CardTitle className="text-base">Portal Configuration</CardTitle></CardHeader>
             <CardContent className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-1.5"><Label>Portal Name</Label><Input defaultValue="HPMS" /></div>
-              <div className="space-y-1.5"><Label>Tagline</Label><Input defaultValue="Highly Professional Management System" /></div>
-              <div className="space-y-1.5"><Label>Support Email</Label><Input defaultValue="support@hpms.gov" /></div>
-              <div className="space-y-1.5"><Label>Helpline</Label><Input defaultValue="1800-123-4567" /></div>
+              <div className="space-y-1.5"><Label>Portal Name</Label><Input defaultValue="HIMUDA PMS" /></div>
+              <div className="space-y-1.5"><Label>Tagline</Label><Input defaultValue="HIMUDA Project Management System" /></div>
+              <div className="space-y-1.5"><Label>Organisation</Label><Input defaultValue="Himachal Pradesh Housing & Urban Development Authority" /></div>
+              <div className="space-y-1.5"><Label>Support Email</Label><Input defaultValue="support@himuda.hp.gov.in" /></div>
+              <div className="space-y-1.5"><Label>Helpline</Label><Input defaultValue="0177-262-5763" /></div>
+              <div className="space-y-1.5"><Label>Head Office</Label><Input defaultValue="Nigam Vihar, Shimla — 171002, Himachal Pradesh" /></div>
               <div className="md:col-span-2"><Button onClick={() => toast.success("Saved")}>Save</Button></div>
             </CardContent>
           </Card>
