@@ -63,6 +63,26 @@ export function RecordDialog({ open, onOpenChange, mode, title, fields, record, 
               )}
             </div>
           ))}
+          {Array.isArray(data.photos) && data.photos.length > 0 && (
+            <div className="md:col-span-2 space-y-1.5">
+              <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Site Photos ({data.photos.length})
+              </Label>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {(data.photos as string[]).map((src, i) => (
+                  <a key={i} href={src} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-md border bg-muted">
+                    <img
+                      src={src}
+                      alt={`Site photo ${i + 1}`}
+                      loading="lazy"
+                      className="h-28 w-full object-cover transition-transform group-hover:scale-105"
+                    />
+                  </a>
+                ))}
+              </div>
+              <p className="text-[11px] text-muted-foreground">Click any photo to open the full-resolution version in a new tab.</p>
+            </div>
+          )}
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>{readonly ? "Close" : "Cancel"}</Button>

@@ -43,8 +43,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "HPMS — Highly Professional Management System" },
-      { name: "description", content: "Enterprise-grade portal for project, contractor, billing and engineer management." },
+      { title: "HIMUDA PMS — Project Management System" },
+      { name: "description", content: "HIMUDA Project Management System — Estimates, projects, MB, billing and on-site progress tracking for Himachal Pradesh Housing & Urban Development Authority." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

@@ -139,7 +139,7 @@ function LoginPage() {
           </Card>
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            © 2026 HIMUDA — Project Management System
+            © 2026 HIMUDA PMS — Project Management System
           </p>
         </div>
       </div>
