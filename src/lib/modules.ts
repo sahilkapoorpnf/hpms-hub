@@ -2,6 +2,7 @@ import {
   LayoutDashboard, Users, ShieldCheck, HardHat, FolderKanban, Building2, Briefcase,
   ClipboardList, FileText, BookOpen, Receipt, BarChart3, Settings, Bell, UserCircle,
   FileCheck2, MapPin, FileInput, Activity, Calculator, Camera, ListChecks,
+  Landmark, Wallet, Banknote, BadgeCheck, FlaskConical, PenSquare, MessageSquareWarning,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
