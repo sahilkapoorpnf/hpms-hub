@@ -531,6 +531,8 @@ const mbFields: ModuleField[] = [
 const billFields: ModuleField[] = [
   { key: "id", label: "Bill No." }, { key: "project", label: "Project" }, { key: "contractor", label: "Contractor" },
   { key: "billType", label: "Bill Type" }, { key: "amount", label: "Amount" }, { key: "gstAmount", label: "GST" },
+  { key: "itDeduction", label: "IT (TDS)" }, { key: "labourCess", label: "Labour Cess" },
+  { key: "securityDeposit", label: "Sec. Deposit" }, { key: "netPayable", label: "Net Payable" },
   { key: "submitted", label: "Submitted", type: "date" }, { key: "payment", label: "Payment" },
   { key: "status", label: "Status", type: "status" },
 ];
