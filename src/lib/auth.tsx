@@ -4,17 +4,17 @@ export type Role = "superadmin" | "admin" | "engineer";
 export type User = { id: string; name: string; email: string; role: Role; avatar?: string };
 
 const DEMO_USERS: Record<string, { password: string; user: User }> = {
-  "superadmin@hpms.gov": {
+  "superadmin@himuda.hp.gov.in": {
     password: "admin123",
-    user: { id: "u1", name: "Rakesh Sharma", email: "superadmin@hpms.gov", role: "superadmin" },
+    user: { id: "u1", name: "Rakesh Sharma", email: "superadmin@himuda.hp.gov.in", role: "superadmin" },
   },
-  "admin@hpms.gov": {
+  "admin@himuda.hp.gov.in": {
     password: "admin123",
-    user: { id: "u2", name: "Priya Verma", email: "admin@hpms.gov", role: "admin" },
+    user: { id: "u2", name: "Priya Verma", email: "admin@himuda.hp.gov.in", role: "admin" },
   },
-  "engineer@hpms.gov": {
+  "engineer@himuda.hp.gov.in": {
     password: "admin123",
-    user: { id: "u3", name: "Anil Kumar", email: "engineer@hpms.gov", role: "engineer" },
+    user: { id: "u3", name: "Anil Kumar", email: "engineer@himuda.hp.gov.in", role: "engineer" },
   },
 };
 
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const raw = typeof window !== "undefined" ? localStorage.getItem("hpms_user") : null;
+    const raw = typeof window !== "undefined" ? localStorage.getItem("himuda_user") : null;
     if (raw) {
       try { setUser(JSON.parse(raw)); } catch {}
     }
@@ -40,13 +40,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const rec = DEMO_USERS[email.toLowerCase().trim()];
     if (!rec || rec.password !== password) throw new Error("Invalid credentials");
     setUser(rec.user);
-    localStorage.setItem("hpms_user", JSON.stringify(rec.user));
+    localStorage.setItem("himuda_user", JSON.stringify(rec.user));
     return rec.user;
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("hpms_user");
+    localStorage.removeItem("himuda_user");
   };
 
   return <Ctx.Provider value={{ user, login, logout }}>{children}</Ctx.Provider>;

@@ -34,7 +34,7 @@ export function AppSidebar({ role }: { role: Role }) {
           </div>
           {!collapsed && (
             <div className="flex flex-col leading-tight">
-              <span className="text-base font-bold tracking-wide text-sidebar-foreground">HPMS</span>
+              <span className="text-base font-bold tracking-wide text-sidebar-foreground">HIMUDA</span>
               <span className="text-[10px] uppercase tracking-wider text-sidebar-foreground/60">{labelMap[role]} Portal</span>
             </div>
           )}
