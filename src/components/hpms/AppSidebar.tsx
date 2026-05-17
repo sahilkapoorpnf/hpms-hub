@@ -20,7 +20,9 @@ export function AppSidebar({ role }: { role: Role }) {
 
   const isActive = (slug: string) => {
     const full = slug ? `${base}/${slug}` : base;
-    return path === full || (slug && path.startsWith(full + "/"));
+    if (path === full) return true;
+    if (slug && path.startsWith(full + "/")) return true;
+    return false;
   };
 
   return (
