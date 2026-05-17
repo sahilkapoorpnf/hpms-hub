@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { moduleBySlug } from "@/lib/modules";
 import { DataTable } from "./DataTable";
 import { RecordDialog } from "./RecordDialog";
@@ -14,6 +14,13 @@ export function ModulePage({ slug }: { slug: string }) {
 
   const mod = moduleBySlug(slug);
   const [rows, setRows] = useState<Record<string, any>[]>(() => mod?.data ?? []);
+  // Reset rows whenever the module slug changes so we don't leak the previous
+  // module's records into the new module's columns.
+  useEffect(() => {
+    setRows(mod?.data ?? []);
+    setOpen(false);
+    setCurrent(null);
+  }, [slug]);
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"view" | "edit" | "create">("create");
   const [current, setCurrent] = useState<Record<string, any> | null>(null);
