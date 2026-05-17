@@ -26,7 +26,7 @@ export function AppSidebar({ role }: { role: Role }) {
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarHeader className="border-b border-sidebar-border bg-sidebar">
-        <Link to={base} className="flex items-center gap-2 px-2 py-2">
+        <Link to={base as string} className="flex items-center gap-2 px-2 py-2">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground shadow">
             <Building2 className="h-5 w-5" />
           </div>
@@ -46,13 +46,15 @@ export function AppSidebar({ role }: { role: Role }) {
             <SidebarMenu>
               {items.map((item) => {
                 const active = isActive(item.slug || "");
-                const to = item.slug ? `${base}/${item.slug}` : base;
                 const Icon = item.icon;
+                const linkProps = item.slug
+                  ? { to: `${base}/$`, params: { _splat: item.slug } as any }
+                  : { to: base as string };
                 return (
                   <SidebarMenuItem key={item.label}>
                     <SidebarMenuButton asChild isActive={active} tooltip={item.label}
                       className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:font-medium">
-                      <Link to={to}>
+                      <Link {...(linkProps as any)}>
                         <Icon className="h-4 w-4" />
                         <span>{item.label}</span>
                       </Link>
