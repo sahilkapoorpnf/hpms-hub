@@ -41,7 +41,7 @@ export function Topbar({ role }: { role: Role }) {
     <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b bg-card/80 px-4 backdrop-blur">
       <SidebarTrigger className="-ml-1" />
       <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
-        <Link to={base} className="font-medium hover:text-foreground">{role === "superadmin" ? "SuperAdmin" : role === "admin" ? "Admin" : "Engineer"}</Link>
+        <Link to={base as any} className="font-medium hover:text-foreground">{role === "superadmin" ? "SuperAdmin" : role === "admin" ? "Admin" : "Engineer"}</Link>
         <ChevronRight className="h-4 w-4" />
         <span className="font-medium text-foreground">{currentLabel}</span>
       </nav>
@@ -85,8 +85,8 @@ export function Topbar({ role }: { role: Role }) {
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild><Link to={`${base}/profile`}>My Profile</Link></DropdownMenuItem>
-            {role === "superadmin" && <DropdownMenuItem asChild><Link to={`${base}/settings`}>Settings</Link></DropdownMenuItem>}
+            <DropdownMenuItem asChild><Link to={`${base}/$` as any} params={{ _splat: "profile" } as any}>My Profile</Link></DropdownMenuItem>
+            {role === "superadmin" && <DropdownMenuItem asChild><Link to={`${base}/$` as any} params={{ _splat: "settings" } as any}>Settings</Link></DropdownMenuItem>}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive" onClick={logout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
