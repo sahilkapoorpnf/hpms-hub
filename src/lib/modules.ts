@@ -274,18 +274,25 @@ const buildTasks = (count = 18) => Array.from({ length: count }, (_, i) => ({
   status: ["Assigned","In Progress","Submitted","Approved","On Hold"][i % 5],
 }));
 
-const buildProgress = (count = 16) => Array.from({ length: count }, (_, i) => ({
-  id: `PRG-${17000 + i}`,
-  taskId: `TSK-${16000 + (i % 18)}`,
-  project: projectNames[i % projectNames.length],
-  engineer: names[(i + 2) % names.length],
-  workDescription: ["Concrete cube test","Slab reinforcement done","Brickwork up to lintel","Plaster 1st coat done","Doors fixed","Tiling completed","Painting in progress","Electrical wiring routed"][i % 8],
-  progressPercent: `${Math.min(100, 15 + i * 5)}%`,
-  photosCount: 2 + (i % 6),
-  geoTag: `${(30.5 + (i % 15) * 0.18).toFixed(4)}, ${(76.5 + (i % 15) * 0.21).toFixed(4)}`,
-  submittedOn: dateAgo(i + 1),
-  status: ["Submitted","Approved","Reviewed","Pending"][i % 4],
-}));
+const buildProgress = (count = 16) => Array.from({ length: count }, (_, i) => {
+  const n = 2 + (i % 5);
+  const photos = Array.from({ length: n }, (_, j) => `https://picsum.photos/seed/himuda-prg-${i}-${j}/640/420`);
+  return {
+    id: `PRG-${17000 + i}`,
+    taskId: `TSK-${16000 + (i % 18)}`,
+    project: projectNames[i % projectNames.length],
+    engineer: names[(i + 2) % names.length],
+    workDescription: ["Concrete cube test","Slab reinforcement done","Brickwork up to lintel","Plaster 1st coat done","Doors fixed","Tiling completed","Painting in progress","Electrical wiring routed"][i % 8],
+    progressPercent: `${Math.min(100, 15 + i * 5)}%`,
+    photosCount: n,
+    geoTag: `${(30.5 + (i % 15) * 0.18).toFixed(4)}, ${(76.5 + (i % 15) * 0.21).toFixed(4)}`,
+    remarks: ["Site cleared and ready","Quality check passed by JE","Material delivered on site","Awaiting executive engineer review","Weather delayed casting by 1 day"][i % 5],
+    inspector: names[(i + 4) % names.length],
+    submittedOn: dateAgo(i + 1),
+    status: ["Submitted","Approved","Reviewed","Pending"][i % 4],
+    photos,
+  };
+});
 
 // ---------- field definitions ----------
 const userFields: ModuleField[] = [
@@ -405,7 +412,8 @@ const progressFields: ModuleField[] = [
   { key: "id", label: "Update ID" }, { key: "taskId", label: "Task" }, { key: "project", label: "Project" },
   { key: "engineer", label: "Engineer" }, { key: "workDescription", label: "Work Description" },
   { key: "progressPercent", label: "Progress" }, { key: "photosCount", label: "Photos", type: "number" },
-  { key: "geoTag", label: "Geo-Tag" }, { key: "submittedOn", label: "Submitted", type: "date" },
+  { key: "geoTag", label: "Geo-Tag" }, { key: "inspector", label: "Inspector" },
+  { key: "remarks", label: "Remarks" }, { key: "submittedOn", label: "Submitted", type: "date" },
   { key: "status", label: "Status", type: "status" },
 ];
 
