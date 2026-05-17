@@ -9,38 +9,188 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SuperadminRouteImport } from './routes/superadmin'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as EngineerRouteImport } from './routes/engineer'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SuperadminIndexRouteImport } from './routes/superadmin.index'
+import { Route as EngineerIndexRouteImport } from './routes/engineer.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as SuperadminSplatRouteImport } from './routes/superadmin.$'
+import { Route as EngineerSplatRouteImport } from './routes/engineer.$'
+import { Route as AdminSplatRouteImport } from './routes/admin.$'
 
+const SuperadminRoute = SuperadminRouteImport.update({
+  id: '/superadmin',
+  path: '/superadmin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EngineerRoute = EngineerRouteImport.update({
+  id: '/engineer',
+  path: '/engineer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SuperadminIndexRoute = SuperadminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const EngineerIndexRoute = EngineerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EngineerRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const SuperadminSplatRoute = SuperadminSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const EngineerSplatRoute = EngineerSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => EngineerRoute,
+} as any)
+const AdminSplatRoute = AdminSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/engineer': typeof EngineerRouteWithChildren
+  '/login': typeof LoginRoute
+  '/superadmin': typeof SuperadminRouteWithChildren
+  '/admin/$': typeof AdminSplatRoute
+  '/engineer/$': typeof EngineerSplatRoute
+  '/superadmin/$': typeof SuperadminSplatRoute
+  '/admin/': typeof AdminIndexRoute
+  '/engineer/': typeof EngineerIndexRoute
+  '/superadmin/': typeof SuperadminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/engineer/$': typeof EngineerSplatRoute
+  '/superadmin/$': typeof SuperadminSplatRoute
+  '/admin': typeof AdminIndexRoute
+  '/engineer': typeof EngineerIndexRoute
+  '/superadmin': typeof SuperadminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/engineer': typeof EngineerRouteWithChildren
+  '/login': typeof LoginRoute
+  '/superadmin': typeof SuperadminRouteWithChildren
+  '/admin/$': typeof AdminSplatRoute
+  '/engineer/$': typeof EngineerSplatRoute
+  '/superadmin/$': typeof SuperadminSplatRoute
+  '/admin/': typeof AdminIndexRoute
+  '/engineer/': typeof EngineerIndexRoute
+  '/superadmin/': typeof SuperadminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/engineer'
+    | '/login'
+    | '/superadmin'
+    | '/admin/$'
+    | '/engineer/$'
+    | '/superadmin/$'
+    | '/admin/'
+    | '/engineer/'
+    | '/superadmin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/admin/$'
+    | '/engineer/$'
+    | '/superadmin/$'
+    | '/admin'
+    | '/engineer'
+    | '/superadmin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/engineer'
+    | '/login'
+    | '/superadmin'
+    | '/admin/$'
+    | '/engineer/$'
+    | '/superadmin/$'
+    | '/admin/'
+    | '/engineer/'
+    | '/superadmin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  EngineerRoute: typeof EngineerRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  SuperadminRoute: typeof SuperadminRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/superadmin': {
+      id: '/superadmin'
+      path: '/superadmin'
+      fullPath: '/superadmin'
+      preLoaderRoute: typeof SuperadminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/engineer': {
+      id: '/engineer'
+      path: '/engineer'
+      fullPath: '/engineer'
+      preLoaderRoute: typeof EngineerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +198,98 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/superadmin/': {
+      id: '/superadmin/'
+      path: '/'
+      fullPath: '/superadmin/'
+      preLoaderRoute: typeof SuperadminIndexRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/engineer/': {
+      id: '/engineer/'
+      path: '/'
+      fullPath: '/engineer/'
+      preLoaderRoute: typeof EngineerIndexRouteImport
+      parentRoute: typeof EngineerRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/superadmin/$': {
+      id: '/superadmin/$'
+      path: '/$'
+      fullPath: '/superadmin/$'
+      preLoaderRoute: typeof SuperadminSplatRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/engineer/$': {
+      id: '/engineer/$'
+      path: '/$'
+      fullPath: '/engineer/$'
+      preLoaderRoute: typeof EngineerSplatRouteImport
+      parentRoute: typeof EngineerRoute
+    }
+    '/admin/$': {
+      id: '/admin/$'
+      path: '/$'
+      fullPath: '/admin/$'
+      preLoaderRoute: typeof AdminSplatRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminSplatRoute: typeof AdminSplatRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminSplatRoute: AdminSplatRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface EngineerRouteChildren {
+  EngineerSplatRoute: typeof EngineerSplatRoute
+  EngineerIndexRoute: typeof EngineerIndexRoute
+}
+
+const EngineerRouteChildren: EngineerRouteChildren = {
+  EngineerSplatRoute: EngineerSplatRoute,
+  EngineerIndexRoute: EngineerIndexRoute,
+}
+
+const EngineerRouteWithChildren = EngineerRoute._addFileChildren(
+  EngineerRouteChildren,
+)
+
+interface SuperadminRouteChildren {
+  SuperadminSplatRoute: typeof SuperadminSplatRoute
+  SuperadminIndexRoute: typeof SuperadminIndexRoute
+}
+
+const SuperadminRouteChildren: SuperadminRouteChildren = {
+  SuperadminSplatRoute: SuperadminSplatRoute,
+  SuperadminIndexRoute: SuperadminIndexRoute,
+}
+
+const SuperadminRouteWithChildren = SuperadminRoute._addFileChildren(
+  SuperadminRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  EngineerRoute: EngineerRouteWithChildren,
+  LoginRoute: LoginRoute,
+  SuperadminRoute: SuperadminRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
