@@ -11,15 +11,15 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/login")({ component: LoginPage });
 
 const demo = [
-  { role: "SuperAdmin", email: "superadmin@hpms.gov", color: "bg-primary text-primary-foreground" },
-  { role: "Admin",      email: "admin@hpms.gov",      color: "bg-info text-info-foreground" },
-  { role: "Engineer",   email: "engineer@hpms.gov",   color: "bg-success text-success-foreground" },
+  { role: "SuperAdmin", email: "superadmin@himuda.hp.gov.in", color: "bg-primary text-primary-foreground" },
+  { role: "Admin",      email: "admin@himuda.hp.gov.in",      color: "bg-info text-info-foreground" },
+  { role: "Engineer",   email: "engineer@himuda.hp.gov.in",   color: "bg-success text-success-foreground" },
 ];
 
 function LoginPage() {
   const { user, login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("superadmin@hpms.gov");
+  const [email, setEmail] = useState("superadmin@himuda.hp.gov.in");
   const [password, setPassword] = useState("admin123");
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -51,15 +51,15 @@ function LoginPage() {
             <Building2 className="h-6 w-6" />
           </div>
           <div>
-            <div className="text-lg font-bold tracking-wide">HPMS</div>
-            <div className="text-xs uppercase tracking-widest text-sidebar-foreground/60">Govt. of India</div>
+            <div className="text-lg font-bold tracking-wide">HIMUDA</div>
+            <div className="text-xs uppercase tracking-widest text-sidebar-foreground/60">Govt. of Himachal Pradesh</div>
           </div>
         </div>
 
         <div className="relative max-w-md">
-          <h1 className="text-4xl font-bold leading-tight">Highly Professional Management System</h1>
+          <h1 className="text-4xl font-bold leading-tight">Himachal Pradesh Housing &amp; Urban Development Authority</h1>
           <p className="mt-4 text-sidebar-foreground/70">
-            A unified, secure portal for project, contractor, measurement-book and billing management across departments.
+            Unified project management portal for estimates, project assignments, measurement books, billing and on-site progress tracking across HIMUDA divisions.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-3">
             {[["248","Projects"],["186","Engineers"],["₹1.2K Cr","Disbursed"]].map(([v,l]) => (
@@ -85,8 +85,8 @@ function LoginPage() {
               <Building2 className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-lg font-bold">HPMS</div>
-              <div className="text-xs uppercase tracking-wider text-muted-foreground">Govt. of India</div>
+              <div className="text-lg font-bold">HIMUDA</div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground">Govt. of Himachal Pradesh</div>
             </div>
           </div>
 
@@ -139,7 +139,7 @@ function LoginPage() {
           </Card>
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            © 2026 HPMS — Highly Professional Management System
+            © 2026 HIMUDA — Project Management System
           </p>
         </div>
       </div>

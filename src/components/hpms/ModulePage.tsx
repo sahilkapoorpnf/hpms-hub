@@ -5,10 +5,12 @@ import { RecordDialog } from "./RecordDialog";
 import { toast } from "sonner";
 import { ProfilePage } from "./ProfilePage";
 import { SettingsPage } from "./SettingsPage";
+import { ProgressUpload } from "./ProgressUpload";
 
 export function ModulePage({ slug }: { slug: string }) {
   if (slug === "profile") return <ProfilePage />;
   if (slug === "settings") return <SettingsPage />;
+  if (slug === "submit-progress") return <ProgressUpload />;
 
   const mod = moduleBySlug(slug);
   const [rows, setRows] = useState<Record<string, any>[]>(() => mod?.data ?? []);
