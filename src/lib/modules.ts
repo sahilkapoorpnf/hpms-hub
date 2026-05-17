@@ -2,6 +2,7 @@ import {
   LayoutDashboard, Users, ShieldCheck, HardHat, FolderKanban, Building2, Briefcase,
   ClipboardList, FileText, BookOpen, Receipt, BarChart3, Settings, Bell, UserCircle,
   FileCheck2, MapPin, FileInput, Activity, Calculator, Camera, ListChecks,
+  Landmark, Wallet, Banknote, BadgeCheck, FlaskConical, PenSquare, MessageSquareWarning,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -198,6 +199,10 @@ const buildBills = (count = 20) => Array.from({ length: count }, (_, i) => ({
   billType: ["RA Bill","Final Bill","Advance","Mobilization"][i % 4],
   amount: `₹${(3 + i * 0.7).toFixed(2)} Cr`,
   gstAmount: `₹${(0.5 + i * 0.12).toFixed(2)} Cr`,
+  itDeduction: `₹${(0.06 + i * 0.014).toFixed(2)} Cr`,
+  labourCess: `₹${(0.03 + i * 0.007).toFixed(2)} Cr`,
+  securityDeposit: `₹${(0.15 + i * 0.035).toFixed(2)} Cr`,
+  netPayable: `₹${((3 + i * 0.7) - (0.06 + i * 0.014) - (0.03 + i * 0.007) - (0.15 + i * 0.035)).toFixed(2)} Cr`,
   submitted: dateAgo(i * 6 + 3),
   payment: ["Pending","Processing","Paid","On Hold"][i % 4],
   status: ["Verified","Approved","Pending","Rejected"][i % 4],
@@ -294,6 +299,161 @@ const buildProgress = (count = 16) => Array.from({ length: count }, (_, i) => {
   };
 });
 
+// ---- HIMUDA additional modules (GPMS-style) ----
+const schemeNames = [
+  "CM Awas Yojana","PMAY-U Housing","AMRUT 2.0","Smart City Shimla","HP Urban Renewal",
+  "Slum Redevelopment","Eco-Tourism Township","Tribal Area Housing","EWS/LIG Quarters","Heritage Conservation",
+];
+const headsOfAccount = ["2216-Housing","4216-Capital Outlay Housing","2217-Urban Dev","4217-Capital UD","2515-Other Rural","4515-Capital Rural"];
+
+const buildSchemes = (count = 12) => Array.from({ length: count }, (_, i) => ({
+  id: `SCH-${20000 + i}`,
+  name: schemeNames[i % schemeNames.length],
+  fundingAgency: ["State Govt.","MoHUA Govt. of India","World Bank","ADB","HUDCO"][i % 5],
+  headOfAccount: headsOfAccount[i % headsOfAccount.length],
+  allocation: `₹${(150 + i * 45)} Cr`,
+  utilised: `₹${(80 + i * 22)} Cr`,
+  projectsCount: 4 + (i % 9),
+  nodalOfficer: names[i % names.length],
+  sanctionDate: dateAgo(i * 60 + 180),
+  validTill: dateAgo(-1 * (180 + i * 30)),
+  status: ["Active","Active","Closed","Suspended"][i % 4],
+}));
+
+const buildApprovals = (count = 18) => Array.from({ length: count }, (_, i) => ({
+  id: `APR-${21000 + i}`,
+  fileType: ["AA - Administrative Approval","TS - Technical Sanction","Revised AA","Revised TS","EOT"][i % 5],
+  project: projectNames[i % projectNames.length],
+  amount: `₹${(12 + i * 3.4).toFixed(2)} Cr`,
+  submittedBy: names[(i + 2) % names.length],
+  currentStage: ["JE","AE","EE","SE","Chief Engineer","Vice Chairman"][i % 6],
+  forwardedTo: ["AE","EE","SE","Chief Engineer","Vice Chairman","CEO HIMUDA"][i % 6],
+  initiatedOn: dateAgo(i * 4 + 6),
+  daysPending: 1 + (i % 14),
+  priority: ["High","Medium","Low"][i % 3],
+  status: ["Pending","Approved","Returned","Approved","Pending"][i % 5],
+}));
+
+const buildQC = (count = 14) => Array.from({ length: count }, (_, i) => ({
+  id: `QC-${22000 + i}`,
+  project: projectNames[i % projectNames.length],
+  testType: ["Cube Test (M25)","Cube Test (M30)","Slump Test","Soil Bearing","Steel Tensile","Bitumen Penetration","Brick Crushing"][i % 7],
+  sampleId: `SMP-${500 + i}`,
+  lab: ["HIMUDA Central Lab","NIT Hamirpur","IIT Mandi Lab","HPPWD Lab Shimla"][i % 4],
+  conductedBy: names[(i + 3) % names.length],
+  testDate: dateAgo(i * 5 + 2),
+  result: `${(22 + (i % 18) * 1.3).toFixed(1)} N/mm²`,
+  specification: ["M25: ≥25","M30: ≥30","Slump: 75-100mm","SBC: 200 kN/m²","Fe500: ≥500","≤30%","≥10.5"][i % 7],
+  remarks: ["Pass","Pass","Pass","Retest advised","Pass"][i % 5],
+  status: ["Passed","Passed","Failed","Passed","Pending"][i % 5],
+}));
+
+const buildBudgets = (count = 14) => Array.from({ length: count }, (_, i) => ({
+  id: `BGT-${23000 + i}`,
+  scheme: schemeNames[i % schemeNames.length],
+  financialYear: ["2024-25","2025-26","2026-27"][i % 3],
+  headOfAccount: headsOfAccount[i % headsOfAccount.length],
+  allocated: `₹${(120 + i * 25)} Cr`,
+  released: `₹${(80 + i * 18)} Cr`,
+  utilised: `₹${(55 + i * 14)} Cr`,
+  balance: `₹${((120 + i * 25) - (55 + i * 14))} Cr`,
+  utilisationPercent: `${Math.min(100, 45 + i * 3)}%`,
+  status: ["On Track","On Track","Under-utilised","Exhausted"][i % 4],
+}));
+
+const buildFundReleases = (count = 16) => Array.from({ length: count }, (_, i) => ({
+  id: `FR-${24000 + i}`,
+  sanctionOrder: `HIMUDA/${2024 + (i % 3)}/SO-${1200 + i}`,
+  scheme: schemeNames[i % schemeNames.length],
+  project: projectNames[i % projectNames.length],
+  amount: `₹${(2 + i * 0.85).toFixed(2)} Cr`,
+  mode: ["RTGS","NEFT","Cheque","Bank Transfer"][i % 4],
+  payee: contractors[i % contractors.length],
+  releasedBy: names[(i + 1) % names.length],
+  releaseDate: dateAgo(i * 7 + 3),
+  utrNo: `UTR${Date.now().toString().slice(-6)}${i}`,
+  status: ["Released","Released","Pending","Reversed"][i % 4],
+}));
+
+const buildDrawings = (count = 16) => Array.from({ length: count }, (_, i) => ({
+  id: `DWG-${25000 + i}`,
+  project: projectNames[i % projectNames.length],
+  drawingNo: `HIMUDA/DWG/${2024 + (i % 3)}/${100 + i}`,
+  title: ["Architectural Plan","Structural Layout","Foundation Detail","Electrical Layout","Plumbing Schematic","Site Plan","Elevation","Cross Section"][i % 8],
+  discipline: ["Architectural","Structural","Electrical","Plumbing","HVAC"][i % 5],
+  scale: ["1:100","1:50","1:200","1:20"][i % 4],
+  revision: `R${i % 5}`,
+  preparedBy: names[(i + 2) % names.length],
+  approvedBy: names[(i + 1) % names.length],
+  uploaded: dateAgo(i * 6 + 4),
+  status: ["Approved","Under Review","Revision","Approved"][i % 4],
+}));
+
+const buildGrievances = (count = 16) => Array.from({ length: count }, (_, i) => ({
+  id: `GRV-${26000 + i}`,
+  complainant: names[i % names.length],
+  phone: phoneOf(i + 40),
+  project: projectNames[i % projectNames.length],
+  category: ["Quality Issue","Delay","Payment","Allotment","Encroachment","Service Request"][i % 6],
+  subject: ["Water leakage in flat","Delay in possession","Bill not paid","Plot demarcation","Boundary dispute","Streetlight not working"][i % 6],
+  assignedTo: names[(i + 3) % names.length],
+  filedOn: dateAgo(i * 3 + 1),
+  dueDate: dateAgo(-1 * (7 + i)),
+  priority: ["High","Medium","Low"][i % 3],
+  status: ["Open","In Progress","Resolved","Closed","Escalated"][i % 5],
+}));
+
+const schemeFields: ModuleField[] = [
+  { key: "id", label: "Scheme ID" }, { key: "name", label: "Scheme" },
+  { key: "fundingAgency", label: "Funding Agency" }, { key: "headOfAccount", label: "Head of A/c" },
+  { key: "allocation", label: "Allocation" }, { key: "utilised", label: "Utilised" },
+  { key: "projectsCount", label: "Projects", type: "number" }, { key: "nodalOfficer", label: "Nodal Officer" },
+  { key: "sanctionDate", label: "Sanctioned", type: "date" }, { key: "validTill", label: "Valid Till", type: "date" },
+  { key: "status", label: "Status", type: "status" },
+];
+const approvalFields: ModuleField[] = [
+  { key: "id", label: "File No." }, { key: "fileType", label: "Type" }, { key: "project", label: "Project" },
+  { key: "amount", label: "Amount" }, { key: "submittedBy", label: "Submitted By" },
+  { key: "currentStage", label: "Current Stage" }, { key: "forwardedTo", label: "Forwarded To" },
+  { key: "initiatedOn", label: "Initiated", type: "date" }, { key: "daysPending", label: "Days", type: "number" },
+  { key: "priority", label: "Priority" }, { key: "status", label: "Status", type: "status" },
+];
+const qcFields: ModuleField[] = [
+  { key: "id", label: "Test ID" }, { key: "project", label: "Project" }, { key: "testType", label: "Test Type" },
+  { key: "sampleId", label: "Sample" }, { key: "lab", label: "Lab" }, { key: "conductedBy", label: "Conducted By" },
+  { key: "testDate", label: "Date", type: "date" }, { key: "result", label: "Result" },
+  { key: "specification", label: "Specification" }, { key: "remarks", label: "Remarks" },
+  { key: "status", label: "Status", type: "status" },
+];
+const budgetFields: ModuleField[] = [
+  { key: "id", label: "Budget ID" }, { key: "scheme", label: "Scheme" },
+  { key: "financialYear", label: "FY" }, { key: "headOfAccount", label: "Head of A/c" },
+  { key: "allocated", label: "Allocated" }, { key: "released", label: "Released" },
+  { key: "utilised", label: "Utilised" }, { key: "balance", label: "Balance" },
+  { key: "utilisationPercent", label: "Util %" }, { key: "status", label: "Status", type: "status" },
+];
+const fundFields: ModuleField[] = [
+  { key: "id", label: "Release ID" }, { key: "sanctionOrder", label: "Sanction Order" },
+  { key: "scheme", label: "Scheme" }, { key: "project", label: "Project" },
+  { key: "amount", label: "Amount" }, { key: "mode", label: "Mode" }, { key: "payee", label: "Payee" },
+  { key: "releasedBy", label: "Released By" }, { key: "releaseDate", label: "Date", type: "date" },
+  { key: "utrNo", label: "UTR No." }, { key: "status", label: "Status", type: "status" },
+];
+const drawingFields: ModuleField[] = [
+  { key: "id", label: "ID" }, { key: "project", label: "Project" }, { key: "drawingNo", label: "Drawing No." },
+  { key: "title", label: "Title" }, { key: "discipline", label: "Discipline" }, { key: "scale", label: "Scale" },
+  { key: "revision", label: "Rev" }, { key: "preparedBy", label: "Prepared By" },
+  { key: "approvedBy", label: "Approved By" }, { key: "uploaded", label: "Uploaded", type: "date" },
+  { key: "status", label: "Status", type: "status" },
+];
+const grievanceFields: ModuleField[] = [
+  { key: "id", label: "Grievance ID" }, { key: "complainant", label: "Complainant" }, { key: "phone", label: "Phone" },
+  { key: "project", label: "Project" }, { key: "category", label: "Category" }, { key: "subject", label: "Subject" },
+  { key: "assignedTo", label: "Assigned To" }, { key: "filedOn", label: "Filed", type: "date" },
+  { key: "dueDate", label: "Due", type: "date" }, { key: "priority", label: "Priority" },
+  { key: "status", label: "Status", type: "status" },
+];
+
 // ---------- field definitions ----------
 const userFields: ModuleField[] = [
   { key: "id", label: "ID" }, { key: "name", label: "Name" }, { key: "email", label: "Email" },
@@ -371,6 +531,8 @@ const mbFields: ModuleField[] = [
 const billFields: ModuleField[] = [
   { key: "id", label: "Bill No." }, { key: "project", label: "Project" }, { key: "contractor", label: "Contractor" },
   { key: "billType", label: "Bill Type" }, { key: "amount", label: "Amount" }, { key: "gstAmount", label: "GST" },
+  { key: "itDeduction", label: "IT (TDS)" }, { key: "labourCess", label: "Labour Cess" },
+  { key: "securityDeposit", label: "Sec. Deposit" }, { key: "netPayable", label: "Net Payable" },
   { key: "submitted", label: "Submitted", type: "date" }, { key: "payment", label: "Payment" },
   { key: "status", label: "Status", type: "status" },
 ];
@@ -438,6 +600,13 @@ export const MODULES: Record<string, ModuleConfig> = {
   reports:      { slug: "reports", title: "Reports & Analytics", icon: BarChart3, fields: projectFields, data: buildProjects() },
   notifications:{ slug: "notifications", title: "Notifications", icon: Bell, fields: notifFields, data: buildNotifications() },
   audit:        { slug: "audit", title: "Audit Logs", icon: Activity, fields: auditFields, data: buildAuditLogs() },
+  schemes:      { slug: "schemes", title: "Schemes & Programmes", icon: Landmark, fields: schemeFields, data: buildSchemes() },
+  approvals:    { slug: "approvals", title: "AA / TS Approvals", icon: BadgeCheck, fields: approvalFields, data: buildApprovals() },
+  quality:      { slug: "quality", title: "Quality Control & Lab Tests", icon: FlaskConical, fields: qcFields, data: buildQC() },
+  budgets:      { slug: "budgets", title: "Budget Allocation", icon: Wallet, fields: budgetFields, data: buildBudgets() },
+  "fund-releases": { slug: "fund-releases", title: "Fund Releases", icon: Banknote, fields: fundFields, data: buildFundReleases() },
+  drawings:     { slug: "drawings", title: "Drawings & DPR Library", icon: PenSquare, fields: drawingFields, data: buildDrawings() },
+  grievances:   { slug: "grievances", title: "Grievances & Complaints", icon: MessageSquareWarning, fields: grievanceFields, data: buildGrievances() },
   settings:     { slug: "settings", title: "Settings", icon: Settings, fields: [], data: [] },
   profile:      { slug: "profile", title: "Profile", icon: UserCircle, fields: [], data: [] },
 };
@@ -446,11 +615,13 @@ export const MODULES: Record<string, ModuleConfig> = {
 export const SIDEBARS: Record<Role, SidebarGroup[]> = {
   superadmin: [
     { label: "Dashboard", icon: LayoutDashboard, slug: "" },
+    { label: "Schemes & Programmes", icon: Landmark, slug: "schemes" },
     { label: "User Management", icon: Users, slug: "users" },
     { label: "Admin Management", icon: ShieldCheck, slug: "admins" },
     { label: "Engineer Management", icon: HardHat, slug: "engineers" },
     { label: "Project Management", icon: FolderKanban, slug: "projects" },
     { label: "Estimate Management", icon: Calculator, slug: "estimates" },
+    { label: "AA / TS Approvals", icon: BadgeCheck, slug: "approvals" },
     { label: "Task Assignment", icon: ListChecks, slug: "tasks" },
     { label: "Departments", icon: Building2, slug: "departments" },
     { label: "Contractors", icon: Briefcase, slug: "contractors" },
@@ -458,6 +629,11 @@ export const SIDEBARS: Record<Role, SidebarGroup[]> = {
     { label: "Tenders", icon: FileText, slug: "tenders" },
     { label: "Measurement Book", icon: BookOpen, slug: "mb" },
     { label: "Billing", icon: Receipt, slug: "bills" },
+    { label: "Budget Allocation", icon: Wallet, slug: "budgets" },
+    { label: "Fund Releases", icon: Banknote, slug: "fund-releases" },
+    { label: "Quality Control", icon: FlaskConical, slug: "quality" },
+    { label: "Drawings Library", icon: PenSquare, slug: "drawings" },
+    { label: "Grievances", icon: MessageSquareWarning, slug: "grievances" },
     { label: "Reports", icon: BarChart3, slug: "reports" },
     { label: "Notifications", icon: Bell, slug: "notifications" },
     { label: "Audit Logs", icon: Activity, slug: "audit" },
@@ -466,14 +642,20 @@ export const SIDEBARS: Record<Role, SidebarGroup[]> = {
   ],
   admin: [
     { label: "Dashboard", icon: LayoutDashboard, slug: "" },
+    { label: "Schemes", icon: Landmark, slug: "schemes" },
     { label: "Engineers", icon: HardHat, slug: "engineers" },
     { label: "Projects", icon: FolderKanban, slug: "projects" },
     { label: "Estimates", icon: Calculator, slug: "estimates" },
+    { label: "AA / TS Approvals", icon: BadgeCheck, slug: "approvals" },
     { label: "Assign Tasks", icon: ListChecks, slug: "tasks" },
     { label: "Contractors", icon: Briefcase, slug: "contractors" },
     { label: "Work Orders", icon: ClipboardList, slug: "work-orders" },
+    { label: "Tenders", icon: FileText, slug: "tenders" },
     { label: "Measurement Book", icon: BookOpen, slug: "mb" },
     { label: "Billing", icon: Receipt, slug: "bills" },
+    { label: "Fund Releases", icon: Banknote, slug: "fund-releases" },
+    { label: "Quality Control", icon: FlaskConical, slug: "quality" },
+    { label: "Grievances", icon: MessageSquareWarning, slug: "grievances" },
     { label: "DPR", icon: FileCheck2, slug: "dpr" },
     { label: "Progress Updates", icon: Camera, slug: "progress" },
     { label: "Reports", icon: BarChart3, slug: "reports" },
@@ -488,9 +670,12 @@ export const SIDEBARS: Record<Role, SidebarGroup[]> = {
     { label: "Progress History", icon: Camera, slug: "progress" },
     { label: "Daily Progress (DPR)", icon: FileCheck2, slug: "dpr" },
     { label: "Measurement Book", icon: BookOpen, slug: "mb" },
+    { label: "Quality Tests", icon: FlaskConical, slug: "quality" },
+    { label: "Drawings", icon: PenSquare, slug: "drawings" },
     { label: "Billing", icon: Receipt, slug: "bills" },
     { label: "Site Monitoring", icon: MapPin, slug: "monitoring" },
     { label: "Documents", icon: FileInput, slug: "documents" },
+    { label: "Grievances", icon: MessageSquareWarning, slug: "grievances" },
     { label: "Notifications", icon: Bell, slug: "notifications" },
     { label: "Profile", icon: UserCircle, slug: "profile" },
   ],
